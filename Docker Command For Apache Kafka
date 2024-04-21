@@ -1,0 +1,28 @@
+1. create zookeeper container 
+
+docker run -p 2181:2181 zookeeper
+
+2.  create Apache Kafka Container
+
+docker run -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=192.168.1.103:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.1.103:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 confluentinc/cp-kafka
+
+// 192.168.1.103 your system ip address => go in cmd and type ipconfig for knowing your system ip address 
+
+3. create Apache kafka topic 
+
+docker exec -it d3ede4248bda kafka-topics --create --topic pkKafka --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
+
+// here d3ede4248bda is container Id of your apache kafka in docker . for finding container id type docker command => docker ps -a 
+// here pkKafka is our Apache kafka Topic name 
+
+4. Apache kafka producer
+
+docker exec -it d3ede4248bda kafka-console-producer --topic pkKafka --bootstrap-server localhost:9092
+
+5. Apache kafka consumer 
+
+docker exec -it d3ede4248bda kafka-console-consumer --topic pkKafka --bootstrap-server localhost:9092 --from-beginning
+
+6. How to delete apache kafka topic 
+
+docker exec -it 26e0cc3c5655 kafka-topics --delete --topic pkKafka --bootstrap-server localhost:9092
