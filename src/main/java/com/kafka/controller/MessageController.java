@@ -2,11 +2,12 @@ package com.kafka.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kafka.model.KafkaModel;
 import com.kafka.producer.KafkaProducer;
 
 @RestController
@@ -16,10 +17,10 @@ public class MessageController {
 	@Autowired
 	private KafkaProducer kafkaProducer;
 	
-	@GetMapping("/get")
-	public ResponseEntity<?>get(@RequestParam String message){
-		kafkaProducer.sendMessage(message);
-		return ResponseEntity.ok("message sent");
+	@PostMapping("/send")
+	public ResponseEntity<?>get(@RequestBody KafkaModel kafkaModel){
+		kafkaProducer.sendMessage(kafkaModel);
+		return ResponseEntity.ok("json message sent to kafka topic");
 	}
 
 }

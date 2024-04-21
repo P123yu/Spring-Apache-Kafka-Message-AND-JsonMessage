@@ -11,10 +11,10 @@ public class KafkaTopic {
     
     @Bean
     NewTopic myTopic() {
-        return TopicBuilder.name("pkKafka").build();
+        return TopicBuilder.name("KafkaJSON").build();
     }
 
 }
 
 
-// here pkKafka is a topic name of kafka
+// here KafkaJSON is a topic name of kafka
